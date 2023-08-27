@@ -1,6 +1,5 @@
 #![feature(portable_simd)]
 
-extern crate core;
 use std::simd::SimdPartialOrd;
 use std::time::Instant;
 
@@ -16,13 +15,11 @@ fn main() {
 
 const MAX_ITERATIONS: i32 = 1023;
 const IMAGE_SIZE: usize = 1024;
+const SIMD_LANES: usize = 16;
 
-// @formatter:off
-type F64simd        = std::simd::f64x16;
-type I64simd        = std::simd::i64x16;
-type Mask64simd  = std::simd::mask64x16;
-const SIMD_LANES: usize            = 16;
-// @formatter:on
+type F64simd = std::simd::Simd<f64, SIMD_LANES>;
+type I64simd = std::simd::Simd<i64, SIMD_LANES>;
+type Mask64simd = std::simd::Mask<i64, SIMD_LANES>;
 
 
 fn mandelbrot(cx: f64, cy: f64) -> i64 {
